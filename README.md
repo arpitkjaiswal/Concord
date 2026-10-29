@@ -72,6 +72,21 @@ For manual creation, choose **Static Site** with these settings:
 
 No runtime secrets or backend services are needed. A Render API key, if used to automate deployment, belongs only in the deployment environment's secret settings; never put it in `render.yaml`, browser code, or a `VITE_` environment variable.
 
+### Render Web Service
+
+If you are already on Render's **Web Service** form, the production server also supports that workflow:
+
+| Setting              | Value                                   |
+| -------------------- | --------------------------------------- |
+| Root directory       | Leave blank                             |
+| Branch               | `main`                                  |
+| Build command        | `npm ci --include=dev && npm run build` |
+| Start command        | `npm start`                             |
+| Compute              | Free                                    |
+| Environment variable | `NODE_VERSION=24`                       |
+
+`npm start` serves the production build with `serve`, listens on `0.0.0.0` and Render's `PORT`, and falls back to `index.html` for client routes. Locally it defaults to port 3000. Build the app before running it. Free web services sleep when inactive; Render Static Sites do not require a running compute instance.
+
 The deployed app still stores each visitor's data in their own browser. Hosting it publicly does not add shared accounts or cross-device synchronization.
 
 ## Project structure

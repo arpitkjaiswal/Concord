@@ -53,6 +53,27 @@ To inspect the production build manually:
 npm run preview
 ```
 
+## Deploy to Render
+
+[Deploy Concord to Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Farpitkjaiswal%2FConcord)
+
+The repository includes a Render Blueprint in `render.yaml`. In Render, connect this GitHub repository, choose the `main` branch, review the static site configuration, and apply the Blueprint. Render then installs dependencies, builds the app, and serves `dist` at the HTTPS URL shown in its dashboard. Updates to `main` are automatically deployed with Render's default auto-deploy setting.
+
+For manual creation, choose **Static Site** with these settings:
+
+| Setting           | Value                                      |
+| ----------------- | ------------------------------------------ |
+| Repository        | `arpitkjaiswal/Concord`                    |
+| Branch            | `main`                                     |
+| Node.js version   | `24` (environment variable `NODE_VERSION`) |
+| Build command     | `npm ci --include=dev && npm run build`    |
+| Publish directory | `dist`                                     |
+| Rewrite           | `/*` → `/index.html`                       |
+
+No runtime secrets or backend services are needed. A Render API key, if used to automate deployment, belongs only in the deployment environment's secret settings; never put it in `render.yaml`, browser code, or a `VITE_` environment variable.
+
+The deployed app still stores each visitor's data in their own browser. Hosting it publicly does not add shared accounts or cross-device synchronization.
+
 ## Project structure
 
 ```text
